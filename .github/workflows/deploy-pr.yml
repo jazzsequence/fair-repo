@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy s3q.us
+    name: Deploy jazzsequence-fair multidev
     runs-on: ubuntu-latest
     env:
       git_user_name: "Pantheon Robot"
