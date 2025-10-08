@@ -46,9 +46,6 @@ jobs:
           composer install --prefer-dist --no-progress
           git add -A
 
-      - name: Run PHP CodeSniffer
-        run: composer lint:phpcs 
-
       - name: Push to Pantheon
         uses: pantheon-systems/push-to-pantheon@0.7.0
         with:

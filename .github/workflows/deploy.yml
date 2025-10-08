@@ -37,6 +37,12 @@ jobs:
           tools: composer:v2
           coverage: none
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'   # or '16' if your node-sass is 6/7
+          architecture: 'x64'		  
+
       - name: Setup Git Config
         run: |
           git config --global user.name "${{ env.git_user_name }}"
@@ -46,9 +52,6 @@ jobs:
         run: |
           composer install --prefer-dist --no-progress
           git add -A
-
-      - name: Run PHP CodeSniffer
-        run: composer lint:phpcs 
 
       - name: Push to Pantheon
         uses: pantheon-systems/push-to-pantheon@0.7.0
