@@ -17,7 +17,15 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "require-dev": {
+        "composer/installers": "*"
+    },
     "scripts": {
         "lint:phpcs": ""
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
     }
 }
