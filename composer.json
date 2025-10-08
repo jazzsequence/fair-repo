@@ -16,7 +16,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "prefer-stable": true,
     "scripts": {
         "lint:phpcs": ""
     }
