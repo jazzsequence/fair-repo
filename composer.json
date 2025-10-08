@@ -1,0 +1,14 @@
+{
+    "name": "jazzsequence/fair-repo",
+    "description": "jazzsequence FAIR repo",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Reynolds",
+            "email": "chris@jazzsequence.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
