@@ -62,3 +62,4 @@ Thumbs.db
 
 /vendor/
 composer.lock
+wp-content/plugins/cmb2
