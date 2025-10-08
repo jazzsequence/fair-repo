@@ -17,6 +17,9 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "require": {
+        "fair/mini-fair-repo": "dev-main"
+    },
     "require-dev": {
         "composer/installers": "*"
     },
