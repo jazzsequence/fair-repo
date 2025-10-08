@@ -63,3 +63,4 @@ Thumbs.db
 /vendor/
 composer.lock
 wp-content/plugins/cmb2
+wp-content/plugins/mini-fair-repo/.git
