@@ -9,6 +9,12 @@
             "email": "chris@jazzsequence.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.jazzsequence.com"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {},
     "scripts": {
