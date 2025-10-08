@@ -24,7 +24,18 @@
         "composer/installers": "*"
     },
     "scripts": {
-        "lint:phpcs": ""
+        "post-install-cmd": [
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/games-collector",
+            "npm install --prefix=./wp-content/plugins/games-collector",
+            "npm run build --prefix=./wp-content/plugins/games-collector"
+        ],
+        "post-update-cmd": [
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/games-collector",
+            "npm install --prefix=./wp-content/plugins/games-collector",
+            "npm run build --prefix=./wp-content/plugins/games-collector"
+        ]
     },
     "config": {
         "allow-plugins": {
