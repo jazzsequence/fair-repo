@@ -19,9 +19,7 @@
     "prefer-stable": true,
     "require": {
         "fair/mini-fair-repo": "dev-main",
-        "fairpm/fair-plugin": "*",
-        "jazzsequence/horror-ipsum": "^1.0",
-        "jazzsequence/games-collector": "^1.3"
+        "fairpm/fair-plugin": "*"
     },
     "require-dev": {
         "composer/installers": "*"
@@ -29,17 +27,11 @@
     "scripts": {
         "post-install-cmd": [
             "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
-            "rm -rf wp-content/plugins/mini-fair-repo/.git",
-            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/games-collector",
-            "npm install --prefix=./wp-content/plugins/games-collector",
-            "npm run build --prefix=./wp-content/plugins/games-collector"
+            "rm -rf wp-content/plugins/mini-fair-repo/.git"
         ],
         "post-update-cmd": [
             "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
-            "rm -rf wp-content/plugins/mini-fair-repo/.git",
-            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/games-collector",
-            "npm install --prefix=./wp-content/plugins/games-collector",
-            "npm run build --prefix=./wp-content/plugins/games-collector"
+            "rm -rf wp-content/plugins/mini-fair-repo/.git"
         ]
     },
     "config": {
