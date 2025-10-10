@@ -16,7 +16,6 @@ $pantheon_mu_plugins = [
 	'pantheon-mu-plugin/pantheon.php',
 	'fair-plugin/plugin.php',
 	'mini-fair-repo/plugin.php',
-	'singleton/Singleton.php',
 ];
 
 foreach ( $pantheon_mu_plugins as $file ) {
