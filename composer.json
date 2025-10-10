@@ -16,14 +16,12 @@
         }
     ],
     "extra": {
-        "installer-types": ["library"],
         "installer-paths": {
             "wp-content/mu-plugins/{$name}/": [
                 "type:wordpress-muplugin",
                 "fairpm/fair-plugin",
                 "fair/mini-fair-repo"
             ],
-            "wp-content/mu-plugins/singleton/": ["afragen/singleton"],
             "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
             "wp-content/themes/{$name}/": ["type:wordpress-theme"]
         }
@@ -31,20 +29,21 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "afragen/singleton": "*",
+        "afragen/git-updater": "*",
         "composer/installers": "*",
         "fair/mini-fair-repo": "dev-main",
-        "fairpm/fair-plugin": "*",
-        "oomphinc/composer-installers-extender": "*"
+        "fairpm/fair-plugin": "*"
     },
     "scripts": {
         "post-install-cmd": [
             "composer install --no-dev --prefer-dist --working-dir=./wp-content/mu-plugins/mini-fair-repo",
-            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git"
+            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git",
+            "cp wp-content/plugins/git-updater/mu/mu-loader.php wp-content/mu-plugins/git-updater.php"
         ],
         "post-update-cmd": [
             "composer install --no-dev --prefer-dist --working-dir=./wp-content/mu-plugins/mini-fair-repo",
-            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git"
+            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git",
+            "cp wp-content/plugins/git-updater/mu/mu-loader.php wp-content/mu-plugins/git-updater.php"
         ]
     },
     "config": {
