@@ -17,11 +17,12 @@
     ],
     "extra": {
         "installer-paths": {
-            "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
             "wp-content/mu-plugins/{$name}/": [
                 "type:wordpress-muplugin",
-                "fairpm/fair-plugin"
+                "fairpm/fair-plugin",
+                "fair/mini-fair-repo"
             ],
+            "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
             "wp-content/themes/{$name}/": ["type:wordpress-theme"]
         }
     },    
@@ -36,12 +37,12 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
-            "rm -rf wp-content/plugins/mini-fair-repo/.git"
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/mu-plugins/mini-fair-repo",
+            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git"
         ],
         "post-update-cmd": [
-            "composer install --no-dev --prefer-dist --working-dir=./wp-content/plugins/mini-fair-repo",
-            "rm -rf wp-content/plugins/mini-fair-repo/.git"
+            "composer install --no-dev --prefer-dist --working-dir=./wp-content/mu-plugins/mini-fair-repo",
+            "rm -rf wp-content/mu-plugins/mini-fair-repo/.git"
         ]
     },
     "config": {

@@ -15,6 +15,7 @@ if ( defined( 'WP_INSTALLING' ) && WP_INSTALLING ) {
 $pantheon_mu_plugins = [
 	'pantheon-mu-plugin/pantheon.php',
 	'fair-plugin/plugin.php',
+	'mini-fair-repo/plugin.php',
 ];
 
 foreach ( $pantheon_mu_plugins as $file ) {
