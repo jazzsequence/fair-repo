@@ -18,11 +18,20 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "fair/mini-fair-repo": "dev-main",
-        "fairpm/fair-plugin": "*"
+        "fair/mini-fair-repo": "dev-main"
     },
     "require-dev": {
         "composer/installers": "*"
+    },
+    "extra": {
+        "installer-paths": {
+            "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "wp-content/mu-plugins/{$name}/": [
+                "type:wordpress-muplugin",
+                "fairpm/fair-plugin"
+            ],
+            "wp-content/themes/{$name}/": ["type:wordpress-theme"]
+        }
     },
     "scripts": {
         "post-install-cmd": [
@@ -35,6 +44,10 @@
         ]
     },
     "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "process-timeout": 0,
+        "sort-packages": true,        
         "allow-plugins": {
             "composer/installers": true
         }
