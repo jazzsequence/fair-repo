@@ -15,14 +15,6 @@
             "url": "https://packages.jazzsequence.com"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "fair/mini-fair-repo": "dev-main"
-    },
-    "require-dev": {
-        "composer/installers": "*"
-    },
     "extra": {
         "installer-paths": {
             "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
@@ -32,6 +24,15 @@
             ],
             "wp-content/themes/{$name}/": ["type:wordpress-theme"]
         }
+    },    
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "fair/mini-fair-repo": "dev-main",
+        "fairpm/fair-plugin": "^1.0"
+    },
+    "require-dev": {
+        "composer/installers": "*"
     },
     "scripts": {
         "post-install-cmd": [
