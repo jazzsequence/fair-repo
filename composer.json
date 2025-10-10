@@ -16,12 +16,14 @@
         }
     ],
     "extra": {
+        "installer-types": ["library"],
         "installer-paths": {
             "wp-content/mu-plugins/{$name}/": [
                 "type:wordpress-muplugin",
                 "fairpm/fair-plugin",
                 "fair/mini-fair-repo"
             ],
+            "wp-content/mu-plugins/singleton/": ["afragen/singleton"],
             "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
             "wp-content/themes/{$name}/": ["type:wordpress-theme"]
         }
@@ -29,11 +31,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "afragen/singleton": "*",
+        "composer/installers": "*",
         "fair/mini-fair-repo": "dev-main",
-        "fairpm/fair-plugin": "^1.0"
-    },
-    "require-dev": {
-        "composer/installers": "*"
+        "fairpm/fair-plugin": "*",
+        "oomphinc/composer-installers-extender": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -51,7 +53,8 @@
         "process-timeout": 0,
         "sort-packages": true,        
         "allow-plugins": {
-            "composer/installers": true
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
         }
     }
 }

@@ -16,12 +16,17 @@ $pantheon_mu_plugins = [
 	'pantheon-mu-plugin/pantheon.php',
 	'fair-plugin/plugin.php',
 	'mini-fair-repo/plugin.php',
+	'singleton/Singleton.php',
 ];
 
 foreach ( $pantheon_mu_plugins as $file ) {
 	require_once WPMU_PLUGIN_DIR . '/' . $file;
 }
 unset( $file );
+
+if ( file_exists( ABSPATH . 'vendor/autoload.php' ) ) {
+	require_once ABSPATH . 'vendor/autoload.php';
+}
 
 add_action( 'pre_current_active_plugins', function () use ( $pantheon_mu_plugins ) {
 	global $plugins, $wp_list_table;
