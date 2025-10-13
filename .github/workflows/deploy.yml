@@ -38,7 +38,7 @@ jobs:
           coverage: none
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '14'   # or '16' if your node-sass is 6/7
           architecture: 'x64'		  
