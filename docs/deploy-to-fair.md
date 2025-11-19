@@ -29,8 +29,8 @@ Add a workflow like `.github/workflows/deploy-to-fair.yml` in the plugin repo:
 name: Deploy to jazzsequence FAIR
 
 on:
-  push:
-    tags: ['v*']   # or release: { types: [published] }
+  release:
+    types: [published]
   workflow_dispatch:
 
 env:
@@ -55,6 +55,11 @@ jobs:
         run: |
           zip -r "${PLUGIN_SLUG}.zip" . \
             -x '*.git*' 'tests/*' 'node_modules/*' '.github/*'
+      - name: Upload plugin package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-zip
+          path: ${{ env.PLUGIN_SLUG }}.zip
       - name: Publish release asset
         uses: softprops/action-gh-release@v2
         with:
@@ -72,27 +77,26 @@ jobs:
     needs: build-and-release
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # create branch and commit
+      contents: write
       pull-requests: write
     steps:
-      - name: Checkout plugin source
-        uses: actions/checkout@v5
-      - name: Build plugin ZIP
-        run: |
-          zip -r "${PLUGIN_SLUG}.zip" . \
-            -x '*.git*' 'tests/*' 'node_modules/*' '.github/*'
+      - name: Download plugin artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-zip
+          path: artifacts
       - name: Checkout FAIR repo
         uses: actions/checkout@v5
         with:
-          repository: jazzsequence/fair-repo   # this repository
+          repository: jazzsequence/fair-repo
           path: fair
           token: ${{ secrets.FAIR_REPO_TOKEN }}   # deploy key or PAT with repo write access
       - name: Update plugin in FAIR repo
         run: |
           cd fair
           rm -rf wp-content/plugins/${PLUGIN_SLUG}
-          unzip ../${PLUGIN_SLUG}.zip -d wp-content/plugins/${PLUGIN_SLUG}
-          git config user.name "fair-bot"
+          unzip ../artifacts/${PLUGIN_SLUG}.zip -d wp-content/plugins/${PLUGIN_SLUG}
+          git config user.name "🤖 FAIR Robot"
           git config user.email "fair-bot@example.com"
           git checkout -B update-${PLUGIN_SLUG}-${GITHUB_REF_NAME}
           git add wp-content/plugins/${PLUGIN_SLUG}
