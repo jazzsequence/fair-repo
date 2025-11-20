@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - PhpCollective/
+        - PhpCollectiveStrict/
+    bootstrapFiles:
+        - '%rootDir%/../../../tests/bootstrap.php'
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:

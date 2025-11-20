@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<ruleset name="PSR2R">
+	<description>
+		PSR2R Coding Standard.
+
+		All sniffs in ./Sniffs will be auto loaded
+
+		Documentation:
+		https://github.com/squizlabs/PHP_CodeSniffer/wiki
+	</description>
+
+	<exclude-pattern>\.git</exclude-pattern>
+	<exclude-pattern>\.xml</exclude-pattern>
+	<exclude-pattern>\.css</exclude-pattern>
+	<exclude-pattern>\.js</exclude-pattern>
+	<exclude-pattern>\.yml</exclude-pattern>
+	<exclude-pattern>\.txt</exclude-pattern>
+	<exclude-pattern>\.json</exclude-pattern>
+
+	<config name="installed_paths" value="../../slevomat/coding-standard,../../php-collective/code-sniffer"/>
+
+	<arg name="tab-width" value="4"/>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UseSpacing"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+	<rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+		<properties>
+			<property name="allowFallbackGlobalFunctions" type="boolean" value="true"/>
+			<property name="allowFallbackGlobalConstants" type="boolean" value="true"/>
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+	<rule ref="SlevomatCodingStandard.Arrays.MultiLineArrayEndBracketPlacement"/>
+	<rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+
+	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInClosureUse"/>
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration">
+		<properties>
+			<property name="onlySingleLine" type="boolean" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse">
+		<properties>
+			<property name="onlySingleLine" type="boolean" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall">
+		<properties>
+			<property name="onlySingleLine" type="boolean" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- silenced due to issue
+	<rule ref="SlevomatCodingStandard.Commenting.DisallowArrayTypeHintSyntax"/>
+	-->
+	<rule ref="PhpCollective.Commenting.TypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
+
+	<!-- already covered
+	<rule ref="SlevomatCodingStandard.Operators.NegationOperatorSpacingSniff"/>
+	-->
+
+	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
+	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
+	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
+		<properties>
+			<property name="fixable" type="bool" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
+
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+
+	<rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
+
+	<rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+	<rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+	<rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
+
+	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
+		<properties>
+			<property name="enableOnObjects" value="false"/>
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+
+	<rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
+
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+	<rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
+
+	<rule ref="PhpCollective.Classes.Psr4"/>
+	<rule ref="PhpCollective.Classes.MethodDeclaration"/>
+	<rule ref="PhpCollective.Classes.MethodArgumentDefaultValue"/>
+	<rule ref="PhpCollective.Classes.MethodTypeHint"/>
+	<rule ref="PhpCollective.Classes.PropertyDefaultValue"/>
+	<rule ref="PhpCollective.Classes.ReturnTypeHint"/>
+	<rule ref="PhpCollective.Classes.SelfAccessor"/>
+	<rule ref="PhpCollective.Classes.ClassFileName"/>
+
+	<rule ref="PhpCollective.Commenting.DocBlockConst"/>
+	<rule ref="PhpCollective.Commenting.DocBlockConstructor"/>
+	<rule ref="PhpCollective.Commenting.DocBlockReturnVoid"/>
+	<rule ref="PhpCollective.Commenting.DocBlockNoInlineAlignment"/>
+	<rule ref="PhpCollective.Commenting.DocBlockPipeSpacing"/>
+	<rule ref="PhpCollective.Commenting.DocBlockReturnTag"/>
+	<rule ref="PhpCollective.Commenting.DocBlockReturnVoid"/>
+	<rule ref="PhpCollective.Commenting.DocBlockTagOrder"/>
+	<rule ref="PhpCollective.Commenting.DocBlockTypeOrder"/>
+	<rule ref="PhpCollective.Commenting.DocBlockVarNotJustNull"/>
+	<rule ref="PhpCollective.Commenting.DocBlockVar"/>
+	<rule ref="PhpCollective.Commenting.DocBlockStructure"/>
+	<rule ref="PhpCollective.Commenting.DocBlockReturnNullableType"/>
+	<rule ref="PhpCollective.Commenting.DocBlockReturnNull"/>
+	<rule ref="PhpCollective.Commenting.DocBlockParamAllowDefaultValue"/>
+	<rule ref="PhpCollective.Commenting.InlineDocBlock"/>
+	<rule ref="PhpCollective.Commenting.Attributes"/>
+	<rule ref="PhpCollective.Commenting.FullyQualifiedClassNameInDocBlock"/>
+
+	<rule ref="PhpCollective.ControlStructures.NoInlineAssignment"/>
+	<rule ref="PhpCollective.ControlStructures.ConditionalExpressionOrder"/>
+
+	<rule ref="PhpCollective.Formatting.ArrayDeclaration"/>
+
+	<rule ref="PhpCollective.PHP.NoIsNull"/>
+	<rule ref="PhpCollective.PHP.NotEqual"/>
+	<rule ref="PhpCollective.PHP.ShortCast"/>
+	<rule ref="PhpCollective.PHP.RemoveFunctionAlias"/>
+	<rule ref="PhpCollective.PHP.PhpSapiConstant"/>
+	<rule ref="PhpCollective.PHP.PreferCastOverFunction"/>
+
+	<rule ref="PhpCollective.WhiteSpace.ConcatenationSpacing"/>
+	<rule ref="PhpCollective.WhiteSpace.ObjectAttributeSpacing"/>
+	<rule ref="PhpCollective.WhiteSpace.CommaSpacing"/>
+	<rule ref="PhpCollective.WhiteSpace.ImplicitCastSpacing"/>
+
+	<rule ref="SlevomatCodingStandard.Operators.SpreadOperatorSpacing"/>
+
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+	<rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+
+	<rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
+	<rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
+	<rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+	<rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+	<rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+
+	<!--
+	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
+	-->
+
+	<rule ref="PEAR.ControlStructures.ControlSignature"/>
+
+	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+	<rule ref="Zend.Files.ClosingTag"/>
+	<rule ref="Generic.Files.LineEndings"/>
+	<rule ref="Generic.Files.ByteOrderMark"/>
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
+	<rule ref="Generic.PHP.LowerCaseType"/>
+
+	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+
+	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+
+	<rule ref="Generic.Formatting.SpaceAfterCast">
+		<properties>
+			<property name="spacing" value="0"/>
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.Functions.FunctionDeclaration"/>
+	<rule ref="PEAR.Functions.ValidDefaultValue"/>
+
+	<rule ref="PSR1"/>
+	<rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
+	<rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+	<rule ref="PSR2.Files.EndFileNewline"/>
+
+	<!--
+	<rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
+	<rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
+	-->
+
+	<rule ref="PSR2.Methods.FunctionCallSignature"/>
+
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+	<rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+
+	<rule ref="PSR12.Files.ImportStatement"/>
+	<rule ref="PSR12.Classes.ClassInstantiation"/>
+	<rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
+	<rule ref="PSR12.Namespaces.CompoundNamespaceDepth"/>
+	<rule ref="PSR12.Operators.OperatorSpacing"/>
+	<rule ref="PSR12.Functions.NullableTypeDeclaration"/>
+	<rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
+
+	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<property name="equalsSpacing" value="1"/>
+		</properties>
+	</rule>
+
+	<rule ref="PEAR.Functions.ValidDefaultValue"/>
+	<rule ref="PEAR.NamingConventions.ValidClassName"/>
+
+	<rule ref="Squiz.Operators.ValidLogicalOperators"/>
+
+	<rule ref="Generic.PHP.DeprecatedFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="delete" value="unset"/>
+				<element key="create_function" value="null"/>
+				<element key="each" value="null"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.PHP.Eval"/>
+	<rule ref="Generic.PHP.ForbiddenFunctions"/>
+	<rule ref="Squiz.PHP.NonExecutableCode"/>
+	<rule ref="Generic.PHP.NoSilencedErrors"/>
+	<rule ref="Generic.PHP.LowerCaseConstant"/>
+
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="tabIndent" value="true" />
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.Scope.MemberVarScope"/>
+	<rule ref="Squiz.Scope.MethodScope"/>
+	<rule ref="Squiz.Scope.StaticThisUsage"/>
+
+	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
+	<rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
+	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+	<!-- PHP 8 specific, only relevant for those PHP 8.0+ -->
+	<rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
+		<properties>
+			<property name="withSpacesAroundOperators" value="no"/>
+			<property name="withSpacesInsideParentheses" value="no"/>
+		</properties>
+	</rule>
+
+	<!-- conflicting -->
+	<rule ref="Squiz.WhiteSpace.MemberVarSpacing.FirstIncorrect">
+		<severity>0</severity>
+	</rule>
+
+</ruleset>
