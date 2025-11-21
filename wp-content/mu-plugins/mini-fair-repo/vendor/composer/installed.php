@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'brick/math' => array(
-            'pretty_version' => '0.13.1',
-            'version' => '0.13.1.0',
-            'reference' => 'fc7ed316430118cc7836bf45faff18d5dfc8de04',
+            'pretty_version' => '0.14.0',
+            'version' => '0.14.0.0',
+            'reference' => '113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'spomky-labs/cbor-php' => array(
-            'pretty_version' => '3.1.1',
-            'version' => '3.1.1.0',
-            'reference' => '5404f3e21cbe72f5cf612aa23db2b922fd2f43bf',
+            'pretty_version' => '3.2.2',
+            'version' => '3.2.2.0',
+            'reference' => '2a5fb86aacfe1004611370ead6caa2bfc88435d0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../spomky-labs/cbor-php',
             'aliases' => array(),

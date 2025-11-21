@@ -16,7 +16,6 @@ use FAIR\Updater;
 const TAB_DIRECT = 'fair_direct';
 const ACTION_INSTALL = 'fair-install-plugin';
 const ACTION_INSTALL_NONCE = 'fair-install-plugin';
-const ACTION_INSTALL_DID = 'fair-install-did';
 
 /**
  * Bootstrap.
@@ -28,16 +27,25 @@ function bootstrap() {
 
 	add_filter( 'install_plugins_tabs', __NAMESPACE__ . '\\add_direct_tab' );
 	add_filter( 'plugins_api', __NAMESPACE__ . '\\handle_did_during_ajax', 10, 3 );
-	add_filter( 'plugins_api', __NAMESPACE__ . '\\search_by_did', 10, 3 );
+	add_filter( 'plugins_api', 'FAIR\\Packages\\search_by_did', 10, 3 );
+	add_filter( 'upgrader_package_options', 'FAIR\\Packages\\cache_did_for_install', 10, 1 );
+	add_action( 'upgrader_post_install', 'FAIR\\Packages\\delete_cached_did_for_install', 10, 3 );
 	add_filter( 'upgrader_pre_download', 'FAIR\\Packages\\upgrader_pre_download', 10, 1 );
 	add_action( 'install_plugins_' . TAB_DIRECT, __NAMESPACE__ . '\\render_tab_direct' );
 	add_action( 'load-plugin-install.php', __NAMESPACE__ . '\\load_plugin_install' );
 	add_action( 'install_plugins_pre_plugin-information', __NAMESPACE__ . '\\maybe_hijack_plugin_info', 0 );
 	add_filter( 'plugins_api_result', __NAMESPACE__ . '\\alter_slugs', 10, 3 );
+	add_filter( 'plugins_api_result', __NAMESPACE__ . '\\sort_sections_in_api', 15, 1 );
 	add_filter( 'plugin_install_action_links', __NAMESPACE__ . '\\maybe_hijack_plugin_install_button', 10, 2 );
 	add_filter( 'plugin_install_description', __NAMESPACE__ . '\\maybe_add_data_to_description', 10, 2 );
 	add_action( 'wp_ajax_check_plugin_dependencies', __NAMESPACE__ . '\\set_slug_to_hashed' );
 	add_filter( 'wp_list_table_class_name', __NAMESPACE__ . '\\maybe_override_list_table' );
+
+	// Needed for pre WordPress 6.9 compatibility.
+	if ( ! is_wp_version_compatible( '6.9' ) ) {
+		add_action( 'install_plugins_featured', __NAMESPACE__ . '\\replace_featured_message' );
+		add_action( 'admin_init', fn() => remove_action( 'install_plugins_featured', 'install_dashboard' ) );
+	}
 }
 
 /**
@@ -69,6 +77,31 @@ function add_direct_tab( $tabs ) {
 }
 
 /**
+ * Replace the featured message with our own.
+ *
+ * @until WordPress 6.9.0
+ * @return void
+ */
+function replace_featured_message() {
+	ob_start();
+	\display_plugins_table();
+	$views = ob_get_clean();
+
+	preg_match( '|<a href="(?<url>[^"]+)">(?<text>[^>]+)<\/a>|', $views, $matches );
+	if ( ! empty( $matches['text'] ) ) {
+		$text_with_fair = str_replace( 'WordPress', 'FAIR', $matches['text'] );
+		$str = str_replace(
+			[ $matches['url'], $matches['text'] ],
+			[ __( 'https://fair.pm/packages/plugins/', 'fair' ), $text_with_fair ],
+			$matches[0]
+		);
+	}
+
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Replacements are escaped. The previous content is direct from Core.
+	echo str_replace( $matches[0], $str, $views );
+}
+
+/**
  * Handles the AJAX request for plugin information when a DID is present.
  *
  * @param mixed  $result The result of the plugins_api call.
@@ -93,62 +126,10 @@ function handle_did_during_ajax( $result, $action, $args ) {
 
 	( new Updater\Updater( $did ) )->run();
 
-	set_transient( ACTION_INSTALL_DID, $did );
 	Packages\add_package_to_release_cache( $did );
 	add_filter( 'http_request_args', 'FAIR\\Packages\\maybe_add_accept_header', 20, 2 );
 
-	return (object) Packages\get_update_data( $did );
-}
-
-/**
- * Enable searching by DID.
- *
- * @param mixed  $result The result of the plugins_api call.
- * @param string $action The action being performed.
- * @param object $args   The arguments passed to the plugins_api call.
- * @return mixed
- */
-function search_by_did( $result, $action, $args ) {
-	if ( 'query_plugins' !== $action || empty( $args->search ) ) {
-		return $result;
-	}
-
-	// The DID comes from a URL-encoded request parameter, and must be decoded first.
-	$did = sanitize_text_field( urldecode( $args->search ) );
-	if ( ! str_starts_with( $did, 'did:plc:' ) || strlen( $did ) !== 32 ) {
-		return $result;
-	}
-
-	$api_data = Packages\get_update_data( $did );
-	if ( is_wp_error( $api_data ) ) {
-		return $result;
-	}
-
-	$api_data = json_decode( json_encode( $api_data ), true );
-	$api_data['description'] = $api_data['sections']['description'];
-	$api_data['short_description'] = substr( strip_tags( trim( $api_data['description'] ) ), 0, 147 ) . '...';
-	$api_data['last_updated'] ??= 0;
-	$api_data['num_ratings'] ??= 0;
-	$api_data['rating'] ??= 0;
-	$api_data['active_installs'] ??= 0;
-
-	// Avoid a double-hashed slug.
-	$hash_suffix = '-' . Packages\get_did_hash( $did );
-	if ( str_ends_with( $api_data['slug'], $hash_suffix ) ) {
-		$api_data['slug'] = str_replace( $hash_suffix, '', $api_data['slug'] );
-	}
-
-	$result = [
-		'plugins' => [ $api_data ],
-		'info' => [
-			'page' => 1,
-			'pages' => 1,
-			'results' => 1,
-			'total' => 1,
-		],
-	];
-
-	return (object) $result;
+	return (object) Packages\get_package_data( $did );
 }
 
 /**
@@ -445,6 +426,34 @@ function alter_slugs( $res, $action, $args ) {
 
 		$did = $plugin['_fair']['id'];
 		$plugin['slug'] = esc_attr( $plugin['slug'] . '-' . str_replace( ':', '--', $did ) );
+	}
+
+	return $res;
+}
+
+/**
+ * Sort plugin modal tabs.
+ *
+ * Based on standard tab listing order.
+ *
+ * @param object|WP_Error $res Response object or WP_Error.
+ * @return object|WP_Error
+ */
+function sort_sections_in_api( $res ) {
+	$ordered_sections = [
+		'description',
+		'installation',
+		'faq',
+		'screenshots',
+		'changelog',
+		'upgrade_notice',
+		'security',
+		'other_notes',
+		'reviews',
+	];
+	if ( property_exists( $res, 'sections' ) && is_array( $res->sections ) ) {
+		$properly_ordered = array_merge( array_fill_keys( $ordered_sections, '' ), $res->sections );
+		$res->sections = array_filter( $properly_ordered );
 	}
 
 	return $res;
