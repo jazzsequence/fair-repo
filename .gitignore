@@ -64,4 +64,3 @@ Thumbs.db
 # Build artifacts
 /vendor/
 !wp-content/mu-plugins/mini-fair-repo/vendor/
-composer.lock
