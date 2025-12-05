@@ -29,6 +29,10 @@ jobs:
           token: ${{ secrets.FAIR_REPO_TOKEN }}
       - name: Install WP-CLI
         uses: godaddy-wordpress/setup-wp-cli@1
+      - name: Add SSH Key to SSH Agent
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Check for WordPress updates
         env:
           SITE_ID: cxr-jazzsequence-fair
