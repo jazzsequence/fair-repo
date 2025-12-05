@@ -29,9 +29,13 @@ compare_versions() {
 	if php -r "exit(version_compare('$site_version', '$current_version', '<') ? 0 : 1);"; then
 		echo "The site is running an outdated version of WordPress: $site_version (current: $current_version)"
 		update_wordpress
+		echo "updates_available=true" >> $GITHUB_OUTPUT
 	else
 		echo "The site is running the current version of WordPress: $site_version"
+		echo "updates_available=false" >> $GITHUB_OUTPUT
 	fi
+
+	echo "current_wp_version=$current_version" >> $GITHUB_OUTPUT
 }
 
 update_wordpress() {

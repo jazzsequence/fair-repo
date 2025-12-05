@@ -48,17 +48,6 @@ jobs:
           WP_PATH: ${{ github.workspace }}
           TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
         run: .github/workflows/bin/check-wp-version.sh
-      - name: Get Current WP Version
-        run: |
-          CURRENT_WP_VERSION=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].current')
-          echo "current_wp_version=$CURRENT_WP_VERSION" >> $GITHUB_ENV
-      - name: Check for updates
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "updates_available=true" >> $GITHUB_ENV
-          else
-            echo "updates_available=false" >> $GITHUB_ENV
-          fi
       - name: Open pull request to FAIR repo via gh
         env:
           GH_TOKEN: ${{ secrets.FAIR_REPO_TOKEN }}
