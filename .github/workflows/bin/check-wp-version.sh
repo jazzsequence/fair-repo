@@ -38,10 +38,10 @@ update_wordpress() {
 	cd ${WP_PATH}
 	git checkout -b update-wp-version-$(get_current_wp_version)-$(date +%Y%m%d)
 
-	wp core update
+	lando wp core update
 
 	local wp_version
-	wp_version=$(wp core version)
+	wp_version=$(lando wp core version)
 	echo "Updating WordPress to version ${wp_version} in ${WP_PATH}"
 	git add .
 	git commit -m "Update WordPress to version ${wp_version}"
