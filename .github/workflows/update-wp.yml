@@ -21,22 +21,21 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-      - name: Checkout FAIR repo
-        uses: actions/checkout@v5
-        with:
-          repository: jazzsequence/fair-repo
-          path: fair
-          token: ${{ secrets.FAIR_REPO_TOKEN }}
       - name: Install WP-CLI
         uses: godaddy-wordpress/setup-wp-cli@1
       - name: Add SSH Key to SSH Agent
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Install Lando
+        uses: tpluscode/set-up-lando@v0.2.2
+      - name: Pull Database from Dev
+        run: |
+          lando pull -c none -f none -d dev
       - name: Check for WordPress updates
         env:
           SITE_ID: cxr-jazzsequence-fair
-          WP_PATH: ${{ github.workspace }}/fair
+          WP_PATH: ${{ github.workspace }}
           TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
         run: .github/workflows/bin/check-wp-version.sh
       - name: Get Current WP Version
@@ -55,7 +54,7 @@ jobs:
           GH_TOKEN: ${{ secrets.FAIR_REPO_TOKEN }}
         if: env.updates_available == 'true'
         run: |
-          cd ${{ github.workspace }}/fair
+          cd ${{ github.workspace }}
           PREFIX="update-wp-version-"
           BRANCH="${PREFIX}${{ env.current_wp_version }}-$(date +%Y%m%d)"
           BASE="main"

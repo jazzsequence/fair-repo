@@ -1,0 +1,6 @@
+name: cxr-jazzsequence-fair
+recipe: pantheon
+config:
+  framework: wordpress
+  id: d5adab8d-c52c-46a7-90ee-2bdc71930e37
+  site: cxr-jazzsequence-fair
