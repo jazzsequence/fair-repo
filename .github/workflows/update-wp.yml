@@ -33,6 +33,7 @@ jobs:
         env:
           SITE_ID: cxr-jazzsequence-fair
           WP_PATH: ${{ github.workspace }}/fair
+          TERMINUS_TOKEN: ${{ secrets.TERMINUS_TOKEN }}
         run: .github/workflows/bin/check-wp-version.sh
       - name: Get Current WP Version
         run: |
