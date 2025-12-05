@@ -27,8 +27,8 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Install Lando
-        uses: tpluscode/set-up-lando@v0.2.2
+      - name: Set up Lando
+        uses: tpluscode/action-lando-start@v0.2.2
       - name: Pull Database from Dev
         run: |
           lando pull -c none -f none -d dev
