@@ -43,6 +43,7 @@ jobs:
           lando start
           lando pull --auth ${{ secrets.TERMINUS_TOKEN }} -c none -f none -d dev
       - name: Check for WordPress updates
+        id: check_wp
         env:
           SITE_ID: cxr-jazzsequence-fair
           WP_PATH: ${{ github.workspace }}
@@ -51,14 +52,14 @@ jobs:
       - name: Open pull request to FAIR repo via gh
         env:
           GH_TOKEN: ${{ secrets.FAIR_REPO_TOKEN }}
-        if: env.updates_available == 'true'
+        if: steps.check_wp.outputs.updates_available == 'true'
         run: |
           cd ${{ github.workspace }}
           PREFIX="update-wp-version-"
-          BRANCH="${PREFIX}${{ env.current_wp_version }}-$(date +%Y%m%d)"
+          BRANCH="${PREFIX}${{ steps.check_wp.outputs.current_wp_version }}-$(date +%Y%m%d)"
           BASE="main"
-          TITLE="Update WordPress to version ${{ env.current_wp_version }}"
-          BODY="Automated update of WordPress to version ${{ env.current_wp_version }}."
+          TITLE="Update WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}"
+          BODY="Automated update of WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}."
           # Close any existing PRs with the same prefix
           gh pr list \ 
             --repo jazzsequence/fair-repo \ 
