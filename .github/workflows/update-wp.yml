@@ -28,9 +28,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Set up Lando
-        uses: tpluscode/action-lando-start@v0.2.2
-      - name: Pull Database from Dev
+        uses: lando/setup-lando@v3
+      - name: Start Lando and pull database from Dev
         run: |
+          lando start
           lando pull -c none -f none -d dev
       - name: Check for WordPress updates
         env:
