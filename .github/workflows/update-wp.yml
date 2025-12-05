@@ -32,6 +32,7 @@ jobs:
       - name: Start Lando and pull database from Dev
         run: |
           lando start
+          lando terminus auth:login --machine-token=${{ secrets.TERMINUS_TOKEN }}
           lando pull -c none -f none -d dev
       - name: Check for WordPress updates
         env:
