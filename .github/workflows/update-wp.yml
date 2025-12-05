@@ -1,0 +1,71 @@
+name: WordPress Update
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:
+jobs:
+  update-wordpress:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-dev
+      - name: Install Terminus
+        uses: pantheon-systems/terminus-github-action@v1
+        with:
+          pantheon-machine_token: ${{ secrets.TERMINUS_TOKEN }}
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+      - name: Checkout FAIR repo
+        uses: actions/checkout@v5
+        with:
+          repository: jazzsequence/fair-repo
+          path: fair
+          token: ${{ secrets.FAIR_REPO_TOKEN }}
+      - name: Install WP-CLI
+        uses: godaddy-wordpress/setup-wp-cli@1
+      - name: Check for WordPress updates
+        env:
+          SITE_ID: cxr-jazzsequence-fair
+          WP_PATH: ${{ github.workspace }}/fair
+        run: .github/workflows/bin/check-wp-version.sh
+      - name: Get Current WP Version
+        run: |
+          CURRENT_WP_VERSION=$(curl -s https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].current')
+          echo "current_wp_version=$CURRENT_WP_VERSION" >> $GITHUB_ENV
+      - name: Check for updates
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "updates_available=true" >> $GITHUB_ENV
+          else
+            echo "updates_available=false" >> $GITHUB_ENV
+          fi
+      - name: Open pull request to FAIR repo via gh
+        env:
+          GH_TOKEN: ${{ secrets.FAIR_REPO_TOKEN }}
+        if: env.updates_available == 'true'
+        run: |
+          cd ${{ github.workspace }}/fair
+          PREFIX="update-wp-version-"
+          BRANCH="${PREFIX}${{ env.current_wp_version }}-$(date +%Y%m%d)"
+          BASE="main"
+          TITLE="Update WordPress to version ${{ env.current_wp_version }}"
+          BODY="Automated update of WordPress to version ${{ env.current_wp_version }}."
+          # Close any existing PRs with the same prefix
+          gh pr list \ 
+            --repo jazzsequence/fair-repo \ 
+            --state open \ 
+            --json number,headRefName \ 
+            --jq '.[]' | select(.headRefName | startswith(\"${PREFIX}\")) | .number | xargs -I {} gh pr close {} --repo jazzsequence/fair-repo -c "Suberceded by ${TITLE} ${BRANCH}"
+          # Create new PR
+          gh pr create \
+            --repo jazzsequence/fair-repo \
+            --title "${TITLE}" \
+            --body "${BODY}" \
+            --head "${BRANCH}" \
+            --base "${BASE}"
