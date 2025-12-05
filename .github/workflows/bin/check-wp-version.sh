@@ -2,11 +2,11 @@
 set -e
 
 authenticate_terminus() {
-	if [ -z "$TERMINUS_MACHINE_TOKEN" ]; then
-		echo "TERMINUS_MACHINE_TOKEN is not set. Exiting."
+	if [ -z "$TERMINUS_TOKEN" ]; then
+		echo "TERMINUS_TOKEN is not set. Exiting."
 		exit 1
 	fi
-	terminus auth:login --machine-token=$TERMINUS_MACHINE_TOKEN
+	terminus auth:login --machine-token=$TERMINUS_TOKEN
 }
 
 get_current_wp_version() {
