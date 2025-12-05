@@ -16,4 +16,4 @@ services:
   index:
     scanner: false
   database:
-    healthcheck: null
+    healthcheck: false
