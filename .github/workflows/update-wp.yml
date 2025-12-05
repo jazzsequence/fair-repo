@@ -29,6 +29,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Set up host keys for Pantheon
         run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa        
           echo "Host *.pantheon.io *.drush.in *.getpantheon.com *.panth.io" >> "$HOME/.ssh/config"
           echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
           echo "HostKeyAlgorithms +ssh-rsa" >> "$HOME/.ssh/config"
