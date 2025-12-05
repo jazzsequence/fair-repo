@@ -4,3 +4,16 @@ config:
   framework: wordpress
   id: d5adab8d-c52c-46a7-90ee-2bdc71930e37
   site: cxr-jazzsequence-fair
+services:
+  appserver_nginx:
+    scanner: false
+  appserver:
+    scanner: false
+  edge:
+    scanner: false
+  edge_ssl:
+    scanner: false
+  index:
+    scanner: false
+  database:
+    healthcheck: null
