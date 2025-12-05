@@ -27,6 +27,11 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up host keys for Pantheon
+        run: |
+          echo "Host *.pantheon.io *.drush.in *.getpantheon.com *.panth.io" >> "$HOME/.ssh/config"
+          echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+          echo "HostKeyAlgorithms +ssh-rsa" >> "$HOME/.ssh/config"
       - name: Set up Lando
         uses: lando/setup-lando@v3
       - name: Start Lando and pull database from Dev
