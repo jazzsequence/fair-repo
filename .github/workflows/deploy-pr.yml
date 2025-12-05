@@ -1,4 +1,4 @@
-name: Deploy to Pantheon
+name: Deploy to Pantheon Multidev
 on:
   pull_request:
     branches:
