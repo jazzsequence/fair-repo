@@ -14,7 +14,7 @@ jobs:
         run: |
           composer install --prefer-dist --no-progress --no-dev
       - name: Install Terminus
-        uses: pantheon-systems/terminus-github-action@v1
+        uses: pantheon-systems/terminus-github-actions@v1
         with:
           pantheon-machine_token: ${{ secrets.TERMINUS_TOKEN }}
       - name: Configure Git
