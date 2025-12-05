@@ -29,8 +29,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Set up Lando
         uses: lando/setup-lando@v3
-        with:
-          lando-version: '3.23.16'
       - name: Start Lando and pull database from Dev
         run: |
           lando start
