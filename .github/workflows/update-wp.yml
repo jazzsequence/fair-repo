@@ -60,6 +60,8 @@ jobs:
           BASE="main"
           TITLE="Update WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}"
           BODY="Automated update of WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}."
+          # Push the update branch so the PR can target it
+          git push origin "${BRANCH}"
           # Close any existing PRs with the same prefix
           gh pr list \
             --repo jazzsequence/fair-repo \
