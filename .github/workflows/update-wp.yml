@@ -65,7 +65,8 @@ jobs:
             --repo jazzsequence/fair-repo \
             --state open \
             --json number,headRefName \
-            --jq '.[]' | select(.headRefName | startswith(\"${PREFIX}\")) | .number | xargs -I {} gh pr close {} --repo jazzsequence/fair-repo -c "Suberceded by ${TITLE} ${BRANCH}"
+            --jq '.[] | select(.headRefName | startswith("'${PREFIX}'")) | .number' | \
+            xargs -r -I {} gh pr close {} --repo jazzsequence/fair-repo -c "Superseded by ${TITLE} ${BRANCH}"
           # Create new PR
           gh pr create \
             --repo jazzsequence/fair-repo \
