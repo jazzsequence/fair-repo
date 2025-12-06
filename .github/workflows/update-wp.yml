@@ -61,10 +61,10 @@ jobs:
           TITLE="Update WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}"
           BODY="Automated update of WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}."
           # Close any existing PRs with the same prefix
-          gh pr list \ 
-            --repo jazzsequence/fair-repo \ 
-            --state open \ 
-            --json number,headRefName \ 
+          gh pr list \
+            --repo jazzsequence/fair-repo \
+            --state open \
+            --json number,headRefName \
             --jq '.[]' | select(.headRefName | startswith(\"${PREFIX}\")) | .number | xargs -I {} gh pr close {} --repo jazzsequence/fair-repo -c "Suberceded by ${TITLE} ${BRANCH}"
           # Create new PR
           gh pr create \
