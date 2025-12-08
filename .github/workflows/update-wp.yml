@@ -24,7 +24,7 @@ jobs:
       - name: Install WP-CLI
         uses: godaddy-wordpress/setup-wp-cli@1
       - name: Add SSH Key to SSH Agent
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Set up host keys for Pantheon
