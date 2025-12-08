@@ -1,8 +1,6 @@
 name: Deploy to Pantheon Multidev
 on:
-  pull_request:
-    branches:
-      - main
+  pull_request_target:
     paths-ignore:
       - '.github/**'
       - 'README.md'
@@ -27,7 +25,15 @@ jobs:
       group: ${{ github.workflow }}-main
       cancel-in-progress: true
     steps:
+      - name: Checkout base repository code
       - uses: actions/checkout@v6
+
+      - name: Checkout PR code
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          path: pr-code
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,6 +49,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd pr-code
           composer install --prefer-dist --no-progress
           git add -A
 
@@ -55,5 +62,6 @@ jobs:
           git_user_name: ${{ env.git_user_name }}
           git_user_email: ${{ env.git_user_email }}
           git_commit_message: "🤖 Commit build assets"
+          relative_site_root: pr-code
       
   
