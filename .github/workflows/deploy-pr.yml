@@ -1,4 +1,4 @@
-name: Deploy to Pantheon
+name: Deploy to Pantheon Multidev
 on:
   pull_request:
     branches:
@@ -27,7 +27,7 @@ jobs:
       group: ${{ github.workflow }}-main
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -52,7 +52,6 @@ jobs:
           ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
           machine_token: ${{ secrets.TERMINUS_TOKEN }}
           site: cxr-jazzsequence-fair
-          target_env: pr-${{ github.event.pull_request.number }}
           git_user_name: ${{ env.git_user_name }}
           git_user_email: ${{ env.git_user_email }}
           git_commit_message: "🤖 Commit build assets"
