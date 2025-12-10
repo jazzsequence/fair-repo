@@ -36,12 +36,6 @@ jobs:
           echo "Host *.pantheon.io *.drush.in *.getpantheon.com *.panth.io" >> "$HOME/.ssh/config"
           echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
           echo "HostKeyAlgorithms +ssh-rsa" >> "$HOME/.ssh/config"
-      - name: Set up Lando
-        uses: lando/setup-lando@v3
-      - name: Start Lando and pull database from Dev
-        run: |
-          lando start
-          lando pull --auth ${{ secrets.TERMINUS_TOKEN }} -c none -f none -d dev
       - name: Check for WordPress updates
         id: check_wp
         env:

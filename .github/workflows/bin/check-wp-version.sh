@@ -39,16 +39,15 @@ compare_versions() {
 }
 
 update_wordpress() {
+	local WP_VERSION=$(get_current_wp_version)
 	cd ${WP_PATH}
-	git checkout -b update-wp-version-$(get_current_wp_version)-$(date +%Y%m%d)
+	git checkout -b update-wp-version-${WP_VERSION}-$(date +%Y%m%d)
 
-	lando wp core update
+	lando wp core download --version=${WP_VERSION} --skip-content --force
 
-	local wp_version
-	wp_version=$(lando wp core version)
-	echo "Updating WordPress to version ${wp_version} in ${WP_PATH}"
+	echo "Updating WordPress to version ${WP_VERSION} in ${WP_PATH}"
 	git add .
-	git commit -m "Update WordPress to version ${wp_version}"
+	git commit -m "Update WordPress to version ${WP_VERSION}"
 }
 
 compare_versions
