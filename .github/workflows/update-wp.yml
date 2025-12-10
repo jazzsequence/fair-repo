@@ -40,6 +40,7 @@ jobs:
         uses: lando/setup-lando@v3
       - name: Start Lando and pull database from Dev
         run: |
+          lando update
           lando start
           lando pull --auth ${{ secrets.TERMINUS_TOKEN }} -c none -f none -d dev
       - name: Check for WordPress updates
