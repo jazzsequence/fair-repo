@@ -1,0 +1,12 @@
+{
+    "require": {
+        "yocto/yoclib-multibase": "^1.2",
+        "simplito/elliptic-php": "^1.0",
+        "spomky-labs/cbor-php": "^3.1"
+    },
+    "autoload": {
+        "classmap": [
+            "inc/"
+        ]
+    }
+}

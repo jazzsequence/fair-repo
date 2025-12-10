@@ -1,6 +1,0 @@
-/.cache/
-/vendor/
-phpcs.xml
-
-# Track placeholders so that empty directories stay in the repo.
-!.gitkeep
