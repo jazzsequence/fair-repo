@@ -67,19 +67,25 @@ trait API_Common {
 				$response[] = $release ?? [];
 			}
 			$release_assets = [];
+			$created_at     = [];
 			foreach ( $response as $release ) {
 				// Ignore leading 'v' and skip anything with dash or words.
 				if ( ! preg_match( '/[^v]+[-a-z]+/', $release->tag_name ) ) {
 					foreach ( $release->assets as $asset ) {
 						if ( str_starts_with( $asset->name, $this->type->slug ) ) {
 							$release_assets[ $release->tag_name ] = $asset->url;
+							$created_at[ $release->tag_name ]     = $asset->created_at;
 							continue 2;
 						}
 					}
 				}
 			}
 			uksort( $release_assets, fn ( $a, $b ) => version_compare( ltrim( $b, 'v' ), ltrim( $a, 'v' ) ) );
-			$response = $release_assets;
+			uksort( $created_at, fn ( $a, $b ) => version_compare( ltrim( $b, 'v' ), ltrim( $a, 'v' ) ) );
+			$response = [
+				'assets'     => $release_assets,
+				'created_at' => $created_at,
+			];
 		}
 
 		/**
@@ -271,7 +277,7 @@ trait API_Common {
 		}
 
 		if ( ! isset( $this->response['readme'] ) ) {
-			$parser   = new Readme_Parser( $response );
+			$parser   = new Readme_Parser( $response, $this->type->slug );
 			$response = $parser->parse_data();
 			$this->set_repo_cache( 'readme', $response );
 		}
@@ -395,11 +401,8 @@ trait API_Common {
 			}
 
 			if ( $response ) {
-				$branches             = $this->parse_branch_response( $response );
-				$this->type->branches = (array) $branches;
+				$branches = $this->parse_branch_response( $response );
 				$this->set_repo_cache( 'branches', (array) $branches );
-
-				return true;
 			}
 		}
 
@@ -435,7 +438,6 @@ trait API_Common {
 		}
 
 		if ( $response && ! isset( $this->response['release_asset'] ) ) {
-			$this->type->release_assets[ $this->type->newest_tag ] = $response;
 			$this->set_repo_cache( 'release_asset', $response );
 			$this->set_repo_cache( 'release_asset_download', $response );
 		}
@@ -476,7 +478,6 @@ trait API_Common {
 		}
 
 		if ( $response && ! isset( $this->response['release_assets'] ) ) {
-			$this->type->release_assets = $response;
 			$this->set_repo_cache( 'release_assets', $response );
 		}
 
@@ -484,7 +485,8 @@ trait API_Common {
 			return false;
 		}
 
-		$this->type->release_assets = $response;
+		$this->type->release_assets = $response['assets'] ?? $response;
+		$this->type->created_at     = $response['created_at'] ?? [];
 
 		return $response;
 	}
