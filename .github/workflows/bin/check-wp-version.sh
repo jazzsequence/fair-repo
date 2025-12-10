@@ -43,7 +43,7 @@ update_wordpress() {
 	cd ${WP_PATH}
 	git checkout -b update-wp-version-${WP_VERSION}-$(date +%Y%m%d)
 
-	lando wp core download --version=${WP_VERSION} --skip-content --force
+	wp core download --version=${WP_VERSION} --skip-content --force
 
 	echo "Updating WordPress to version ${WP_VERSION} in ${WP_PATH}"
 	git add .
