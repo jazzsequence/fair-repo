@@ -68,9 +68,10 @@ jobs:
           # If the update was detected in a plugin, extract the plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/plugins/* ]]; then
-              if [[ $FILE == composer.* ]]; then
+              if [[ $FILE == composer.lock || $FILE == composer.json ]]; then
                 continue
               fi
+              echo "Plugin update detected in changed files."
               PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
               TITLE="Update WordPress plugin '$PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress plugin '$PLUGIN_NAME' to latest version."
@@ -83,9 +84,10 @@ jobs:
           # If the update was detected in a mu-plugin, extract the mu-plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/mu-plugins/* ]]; then
-              if [[ $FILE == composer.* ]]; then
+              if [[ $FILE == composer.lock || $FILE == composer.json ]]; then
                 continue
               fi
+              echo "Mu-plugin update detected in changed files."
               MU_PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
               TITLE="Update WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version."
@@ -97,19 +99,21 @@ jobs:
 
           # All other updates collected in a catch-all branch and details output in the PR.
           if [ "$CHANGES_DEFINED" = false ]; then
+            echo "A miscellaneous WordPress component update was detected."
             TITLE="Update WordPress components to latest versions"
             BODY="Automated update of WordPress components to latest versions. Updated files:\n\n$CHANGED_FILES"
             BRANCH="${PREFIX}misc-updates-$(date +%Y%m%d)"
           fi
 
-          # Check if the branch already exists
-          if git show-ref --verify --quiet "refs/heads/${BRANCH}"; then
+          # Check if the branch already exists.
+          git fetch origin --prune
+          if git ls-remote --exit-code --heads origin "${BRANCH}" >/dev/null; then
             echo "Branch ${BRANCH} already exists. Deleting existing branch."
             git branch -D "${BRANCH}"
           fi
 
           # Create and switch to the update branch
-          git checkout -b "${BRANCH}"
+          git checkout -B "${BRANCH}"
           # Commit the changes
           git add .
           git commit -m "${TITLE}"
