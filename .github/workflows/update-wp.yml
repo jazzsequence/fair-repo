@@ -102,6 +102,12 @@ jobs:
             BRANCH="${PREFIX}misc-updates-$(date +%Y%m%d)"
           fi
 
+          # Check if the branch already exists
+          if git show-ref --verify --quiet "refs/heads/${BRANCH}"; then
+            echo "Branch ${BRANCH} already exists. Deleting existing branch."
+            git branch -D "${BRANCH}"
+          fi
+
           # Create and switch to the update branch
           git checkout -b "${BRANCH}"
           # Commit the changes
