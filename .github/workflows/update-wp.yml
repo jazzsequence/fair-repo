@@ -49,13 +49,61 @@ jobs:
         if: steps.check_wp.outputs.updates_available == 'true'
         run: |
           cd ${{ github.workspace }}
+          CHANGES_DEFINED=false
           PREFIX="update-wp-version-"
-          BRANCH="${PREFIX}${{ steps.check_wp.outputs.current_wp_version }}-$(date +%Y%m%d)"
+          CHANGED_FILES="${{ steps.check_wp.outputs.changed_files }}"
           BASE="main"
-          TITLE="Update WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}"
-          BODY="Automated update of WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}."
+
+          # Check if wp-includes/version.php was changed. If so, a WordPress update occurred.
+          if ! echo "$CHANGED_FILES" | grep -q "wp-includes/version.php"; then
+            echo "No WordPress update detected in changed files."
+          else
+            echo "WordPress update detected in changed files."
+            TITLE="Update WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}"
+            BODY="Automated update of WordPress to version ${{ steps.check_wp.outputs.current_wp_version }}."
+            BRANCH="${PREFIX}${{ steps.check_wp.outputs.current_wp_version }}-$(date +%Y%m%d)"
+            CHANGES_DEFINED=true
+          fi
+
+          # If the update was detected in a plugin, extract the plugin name for the branch and PR content.
+          for FILE in $CHANGED_FILES; do
+            if [[ $FILE == wp-content/plugins/* ]]; then
+              PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
+              TITLE="Update WordPress plugin '$PLUGIN_NAME' to latest version"
+              BODY="Automated update of WordPress plugin '$PLUGIN_NAME' to latest version."
+              BRANCH="${PREFIX}plugin-${PLUGIN_NAME}-update-$(date +%Y%m%d)"
+              CHANGES_DEFINED=true
+              break
+            fi
+          done
+
+          # If the update was detected in a mu-plugin, extract the mu-plugin name for the branch and PR content.
+          for FILE in $CHANGED_FILES; do
+            if [[ $FILE == wp-content/mu-plugins/* ]]; then
+              MU_PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
+              TITLE="Update WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version"
+              BODY="Automated update of WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version."
+              BRANCH="${PREFIX}mu-plugin-${MU_PLUGIN_NAME}-update-$(date +%Y%m%d)"
+              CHANGES_DEFINED=true
+              break
+            fi
+          done
+
+          # All other updates collected in a catch-all branch and details output in the PR.
+          if [ "$CHANGES_DEFINED" = false ]; then
+            TITLE="Update WordPress components to latest versions"
+            BODY="Automated update of WordPress components to latest versions. Updated files:\n\n$CHANGED_FILES"
+            BRANCH="${PREFIX}misc-updates-$(date +%Y%m%d)"
+          fi
+
+          # Create and switch to the update branch
+          git checkout -b "${BRANCH}"
+          # Commit the changes
+          git add .
+          git commit -m "${TITLE}"
           # Push the update branch so the PR can target it
           git push origin "${BRANCH}"
+          
           # Close any existing PRs with the same prefix
           gh pr list \
             --repo jazzsequence/fair-repo \
