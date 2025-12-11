@@ -68,11 +68,11 @@ jobs:
           # If the update was detected in a plugin, extract the plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/plugins/* ]]; then
-              if [[ $FILE == composer.lock || $FILE == composer.json ]]; then
+              if [[ $(basename "$FILE") == composer.lock || $(basename "$FILE") == composer.json ]]; then
                 continue
               fi
               echo "Plugin update detected in changed files."
-              PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
+              PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f3)
               TITLE="Update WordPress plugin '$PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress plugin '$PLUGIN_NAME' to latest version."
               BRANCH="${PREFIX}plugin-${PLUGIN_NAME}-update-$(date +%Y%m%d)"
@@ -84,11 +84,11 @@ jobs:
           # If the update was detected in a mu-plugin, extract the mu-plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/mu-plugins/* ]]; then
-              if [[ $FILE == composer.lock || $FILE == composer.json ]]; then
+              if [[ $(basename "$FILE") == composer.lock || $(basename "$FILE") == composer.json ]]; then
                 continue
               fi
               echo "Mu-plugin update detected in changed files."
-              MU_PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
+              MU_PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f3)
               TITLE="Update WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version."
               BRANCH="${PREFIX}mu-plugin-${MU_PLUGIN_NAME}-update-$(date +%Y%m%d)"
