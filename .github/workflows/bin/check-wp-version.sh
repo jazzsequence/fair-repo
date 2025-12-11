@@ -52,10 +52,6 @@ update_wordpress() {
 	local changed_files
 	changed_files=$(git status --porcelain=1 --untracked-files=all | cut -c4-)
 	printf "changed_files<<EOF\n%s\nEOF\n" "${changed_files}" >> "$GITHUB_OUTPUT"
-
-	echo "Updating WordPress to version ${WP_VERSION} in ${WP_PATH}"
-	git add .
-	git commit -m "Update WordPress to version ${WP_VERSION}"
 }
 
 compare_versions
