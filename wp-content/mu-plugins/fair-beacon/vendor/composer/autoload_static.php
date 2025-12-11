@@ -7,19 +7,19 @@ namespace Composer\Autoload;
 class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
 {
     public static $prefixLengthsPsr4 = array (
-        'Y' => 
+        'Y' =>
         array (
             'YOCLIB\\Multiformats\\Multibase\\' => 30,
         ),
-        'E' => 
+        'E' =>
         array (
             'Elliptic\\' => 9,
         ),
-        'C' => 
+        'C' =>
         array (
             'CBOR\\' => 5,
         ),
-        'B' => 
+        'B' =>
         array (
             'Brick\\Math\\' => 11,
             'BN\\' => 3,
@@ -28,27 +28,27 @@ class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
     );
 
     public static $prefixDirsPsr4 = array (
-        'YOCLIB\\Multiformats\\Multibase\\' => 
+        'YOCLIB\\Multiformats\\Multibase\\' =>
         array (
             0 => __DIR__ . '/..' . '/yocto/yoclib-multibase/src',
         ),
-        'Elliptic\\' => 
+        'Elliptic\\' =>
         array (
             0 => __DIR__ . '/..' . '/simplito/elliptic-php/lib',
         ),
-        'CBOR\\' => 
+        'CBOR\\' =>
         array (
             0 => __DIR__ . '/..' . '/spomky-labs/cbor-php/src',
         ),
-        'Brick\\Math\\' => 
+        'Brick\\Math\\' =>
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'BN\\' => 
+        'BN\\' =>
         array (
             0 => __DIR__ . '/..' . '/simplito/bn-php/lib',
         ),
-        'BI\\' => 
+        'BI\\' =>
         array (
             0 => __DIR__ . '/..' . '/simplito/bigint-wrapper-php/lib',
         ),
