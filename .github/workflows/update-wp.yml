@@ -68,6 +68,9 @@ jobs:
           # If the update was detected in a plugin, extract the plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/plugins/* ]]; then
+              if [[ $FILE == composer.* ]]; then
+                continue
+              fi
               PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
               TITLE="Update WordPress plugin '$PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress plugin '$PLUGIN_NAME' to latest version."
@@ -80,6 +83,9 @@ jobs:
           # If the update was detected in a mu-plugin, extract the mu-plugin name for the branch and PR content.
           for FILE in $CHANGED_FILES; do
             if [[ $FILE == wp-content/mu-plugins/* ]]; then
+              if [[ $FILE == composer.* ]]; then
+                continue
+              fi
               MU_PLUGIN_NAME=$(echo "$FILE" | cut -d'/' -f4)
               TITLE="Update WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version"
               BODY="Automated update of WordPress mu-plugin '$MU_PLUGIN_NAME' to latest version."
@@ -103,7 +109,7 @@ jobs:
           git commit -m "${TITLE}"
           # Push the update branch so the PR can target it
           git push origin "${BRANCH}"
-          
+
           # Close any existing PRs with the same prefix
           gh pr list \
             --repo jazzsequence/fair-repo \
