@@ -26,7 +26,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Checkout base repository code
-      - uses: actions/checkout@v6
+        uses: actions/checkout@v6
 
       - name: Checkout PR code
         uses: actions/checkout@v6
