@@ -26,6 +26,9 @@ compare_versions() {
 	current_version=$(get_current_wp_version)
 	site_version=$(get_site_wp_version)
 
+	# Default output so the workflow always has the key available
+	echo "changed_files=" >> $GITHUB_OUTPUT
+
 	if php -r "exit(version_compare('$site_version', '$current_version', '<') ? 0 : 1);"; then
 		echo "The site is running an outdated version of WordPress: $site_version (current: $current_version)"
 		update_wordpress
@@ -44,6 +47,11 @@ update_wordpress() {
 	git checkout -b update-wp-version-${WP_VERSION}-$(date +%Y%m%d)
 
 	wp core download --version=${WP_VERSION} --skip-content --force
+
+	# Capture the list of files changed by the update for later use in the workflow
+	local changed_files
+	changed_files=$(git status --porcelain=1 --untracked-files=all | cut -c4-)
+	printf "changed_files<<EOF\n%s\nEOF\n" "${changed_files}" >> "$GITHUB_OUTPUT"
 
 	echo "Updating WordPress to version ${WP_VERSION} in ${WP_PATH}"
 	git add .
