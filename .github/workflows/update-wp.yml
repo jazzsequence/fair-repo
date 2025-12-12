@@ -98,7 +98,7 @@ jobs:
           done
 
           # Check if there are any other changes.
-          if [ -n $(git status --porcelain) ]; then
+          if [ -n "$(git status --porcelain)" ]; then
             echo "A miscellaneous WordPress component update was detected."
             TITLE="Update WordPress components to latest versions"
             BODY="Automated update of WordPress components to latest versions. Updated files:\n\n$CHANGED_FILES"
@@ -107,7 +107,7 @@ jobs:
           fi
 
           # No changes detected. Bailing.
-          if [[ $CHANGES_DETECTED="false" ]]; then
+          if [[ "$CHANGES_DETECTED" == "false" ]]; then
             echo "No changes to commit. Exiting workflow."
             exit 0
           fi
