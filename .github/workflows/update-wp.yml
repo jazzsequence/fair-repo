@@ -107,7 +107,7 @@ jobs:
           fi
 
           # No changes detected. Bailing.
-          if [[ "$CHANGES_DETECTED" == "false" ]]; then
+          if [[ "$CHANGES_DEFINED" == "false" ]]; then
             echo "No changes to commit. Exiting workflow."
             exit 0
           fi
