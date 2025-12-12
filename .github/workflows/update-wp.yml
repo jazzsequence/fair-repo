@@ -97,12 +97,19 @@ jobs:
             fi
           done
 
-          # All other updates collected in a catch-all branch and details output in the PR.
-          if [ "$CHANGES_DEFINED" = false ]; then
+          # Check if there are any other changes.
+          if [ -n $(git status --porcelain) ]; then
             echo "A miscellaneous WordPress component update was detected."
             TITLE="Update WordPress components to latest versions"
             BODY="Automated update of WordPress components to latest versions. Updated files:\n\n$CHANGED_FILES"
             BRANCH="${PREFIX}misc-updates-$(date +%Y%m%d)"
+            CHANGES_DETECTED=true
+          fi
+
+          # No changes detected. Bailing.
+          if [[ $CHANGES_DETECTED="false" ]]; then
+            echo "No changes to commit. Exiting workflow."
+            exit 0
           fi
 
           # Check if the branch already exists.
