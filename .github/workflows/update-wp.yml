@@ -103,7 +103,7 @@ jobs:
             TITLE="Update WordPress components to latest versions"
             BODY="Automated update of WordPress components to latest versions. Updated files:\n\n$CHANGED_FILES"
             BRANCH="${PREFIX}misc-updates-$(date +%Y%m%d)"
-            CHANGES_DETECTED=true
+            CHANGES_DEFINED=true
           fi
 
           # No changes detected. Bailing.
