@@ -44,7 +44,13 @@
             "composer install --no-dev --prefer-dist --working-dir=./wp-content/mu-plugins/fair-beacon",
             "rm -rf wp-content/mu-plugins/fair-beacon/.git",
             "cp wp-content/plugins/git-updater/mu/mu-loader.php wp-content/mu-plugins/git-updater.php"
-        ]
+        ],
+        "deploy": [
+            "bash ./private/scripts/deploy.sh"
+        ],
+        "deploy:test": [
+            "terminus env:deploy cxr-jazzsequence-fair.test"
+        ]        
     },
     "config": {
         "optimize-autoloader": true,
