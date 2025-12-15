@@ -2,7 +2,7 @@ name: Deploy to Pantheon Multidev
 on:
   pull_request_target:
     paths-ignore:
-      - '.github/**'
+      #- '.github/**'
       - 'README.md'
       - 'CHANGELOG.md'
       - 'web/app/object-cache.php'
