@@ -71,5 +71,6 @@ jobs:
           git_user_email: ${{ env.git_user_email }}
           git_commit_message: "🤖 Commit build assets"
           relative_site_root: pr-code
+          skip_build_tools: true
       
   
