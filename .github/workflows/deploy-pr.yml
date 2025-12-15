@@ -1,6 +1,14 @@
 name: Deploy to Pantheon Multidev
 on:
-  pull_request_target:
+  # pull_request_target:
+  #   paths-ignore:
+  #     - '.github/**'
+  #     - 'README.md'
+  #     - 'CHANGELOG.md'
+  #     - 'web/app/object-cache.php'
+  #     - 'private/scripts/*'
+  #     - 'upstream-configuration/**'
+  pull_request:
     paths-ignore:
       - '.github/**'
       - 'README.md'
