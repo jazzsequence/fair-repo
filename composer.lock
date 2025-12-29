@@ -431,16 +431,16 @@
         },
         {
             "name": "fairpm/fair-plugin",
-            "version": "1.1.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fairpm/fair-plugin.git",
-                "reference": "acf1fb9fd76021fcf7f00906ca056ba47cfc4a96"
+                "reference": "d266c5c8260cd830070b36ece4c32aaf4ce6c430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fairpm/fair-plugin/zipball/acf1fb9fd76021fcf7f00906ca056ba47cfc4a96",
-                "reference": "acf1fb9fd76021fcf7f00906ca056ba47cfc4a96",
+                "url": "https://api.github.com/repos/fairpm/fair-plugin/zipball/d266c5c8260cd830070b36ece4c32aaf4ce6c430",
+                "reference": "d266c5c8260cd830070b36ece4c32aaf4ce6c430",
                 "shasum": ""
             },
             "require": {
@@ -513,7 +513,7 @@
                 "source": "https://github.com/fairpm/fair-plugin",
                 "docs": "https://github.com/fairpm/fair-plugin/blob/main/README.md"
             },
-            "time": "2025-11-07T00:13:34+00:00"
+            "time": "2025-12-24T14:57:27+00:00"
         },
         {
             "name": "freemius/wordpress-sdk",
