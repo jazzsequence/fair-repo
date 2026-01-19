@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "afragen/git-updater",
-            "version": "12.20.2",
+            "version": "12.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/afragen/git-updater.git",
-                "reference": "4aaecdb24acb9bd2aab22a116991db1b6612b0a6"
+                "reference": "637b624db7559ec3f3a688d9416de8ba01c16232"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/afragen/git-updater/zipball/4aaecdb24acb9bd2aab22a116991db1b6612b0a6",
-                "reference": "4aaecdb24acb9bd2aab22a116991db1b6612b0a6",
+                "url": "https://api.github.com/repos/afragen/git-updater/zipball/637b624db7559ec3f3a688d9416de8ba01c16232",
+                "reference": "637b624db7559ec3f3a688d9416de8ba01c16232",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -72,7 +72,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-08T17:27:05+00:00"
+            "time": "2026-01-14T01:07:52+00:00"
         },
         {
             "name": "afragen/singleton",
