@@ -19,4 +19,3 @@ Pantheon is website platform optimized and configured to run high performance si
 ## Deploying to jazzsequence FAIR
 
 See the [Deploying WordPress Plugins to Mini FAIR](docs/deploy-to-fair.md) guide for instructions on how to set up a plugin repository to deploy to this FAIR host. Plugins need to be manually approved before they are added to the Mini FAIR instance.
-
