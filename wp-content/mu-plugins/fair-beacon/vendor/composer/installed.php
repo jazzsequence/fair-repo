@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'brick/math' => array(
-            'pretty_version' => '0.14.1',
-            'version' => '0.14.1.0',
-            'reference' => 'f05858549e5f9d7bb45875a75583240a38a281d0',
+            'pretty_version' => '0.14.7',
+            'version' => '0.14.7.0',
+            'reference' => '07ff363b16ef8aca9692bba3be9e73fe63f34e50',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
