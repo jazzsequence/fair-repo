@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "afragen/git-updater",
-            "version": "12.20.2",
+            "version": "12.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/afragen/git-updater.git",
-                "reference": "4aaecdb24acb9bd2aab22a116991db1b6612b0a6"
+                "reference": "830d728119a418a026e62067100de07518300512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/afragen/git-updater/zipball/4aaecdb24acb9bd2aab22a116991db1b6612b0a6",
-                "reference": "4aaecdb24acb9bd2aab22a116991db1b6612b0a6",
+                "url": "https://api.github.com/repos/afragen/git-updater/zipball/830d728119a418a026e62067100de07518300512",
+                "reference": "830d728119a418a026e62067100de07518300512",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -72,7 +72,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-08T17:27:05+00:00"
+            "time": "2026-02-12T21:50:51+00:00"
         },
         {
             "name": "afragen/singleton",
@@ -360,12 +360,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "0b274ac959624e6c6d647e9c9b6c2d20da242004"
+                "reference": "96baaad00f71ba04d76e45b4620f54d3beabd6f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/0b274ac959624e6c6d647e9c9b6c2d20da242004",
-                "reference": "0b274ac959624e6c6d647e9c9b6c2d20da242004",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/96baaad00f71ba04d76e45b4620f54d3beabd6f7",
+                "reference": "96baaad00f71ba04d76e45b4620f54d3beabd6f7",
                 "shasum": ""
             },
             "require": {
@@ -403,7 +403,13 @@
                 "issues": "https://github.com/erusev/parsedown/issues",
                 "source": "https://github.com/erusev/parsedown/tree/master"
             },
-            "time": "2025-08-31T07:57:44+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/erusev",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-02-16T11:41:01+00:00"
         },
         {
             "name": "fairpm/fair-beacon",
