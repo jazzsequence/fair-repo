@@ -1,8 +1,8 @@
-# FAIR
+# FAIR Connect
 
 FAIR is a system for using **F**ederated **a**nd **I**ndependent **R**epositories in WordPress.
 
-This repository contains the plugin for installation into WordPress.
+This repository contains the FAIR Connect plugin for installation into WordPress.
 
 ## Description
 
@@ -14,19 +14,19 @@ This plugin configures your site to use FAIR implementations of the key services
 
 FAIR can be installed manually by downloading the latest zip from releases and install it via your WordPress admin dashboard.
 
-* [FAIR Releases](https://github.com/fairpm/fair-plugin/releases)
+* [FAIR Connect Releases](https://github.com/fairpm/fair-plugin/releases)
 * [How To Manually Install a Plugin](https://wordpress.org/documentation/article/manage-plugins/#manual-plugin-installation-1)
 
 ### Uninstallation
 
-To remove the FAIR plugin and its features, you can deactivate and delete the plugin. There are no changes made to your database outside of the plugin settings, and no external files are edited. FAIR is a self-contained plugin, using the accepted WordPress standards and practices.
+To remove the FAIR Connect plugin and its features, you can deactivate and delete the plugin. There are no changes made to your database outside of the plugin settings, and no external files are edited. FAIR Connect is a self-contained plugin, using the accepted WordPress standards and practices.
 
 ## Features
 
 > [!NOTE]
 > The FAIR project is brand new. This plugin is a pre-release and some features are yet to be fully implemented.
 
-The FAIR plugin implements federated or local versions of the following features in WordPress:
+The FAIR Connect plugin implements federated or local versions of the following features in WordPress:
 
 * Version checks and updates to WordPress, plugins, and themes
 * Language packs and translations
@@ -45,11 +45,31 @@ In addition to the key FAIR implementations, a few other features in WordPress a
 * Media features provided by OpenVerse are disabled, pending discussion and work by the FAIR working group
 * Ping services are configured to use IndexNow in place of Pingomatic
 
+## Screenshots
+
+**Add Plugins page with FAIR Package Manager installed**
+![Add Plugins page with FAIR Package Manager installed](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-1.png)
+
+**Plugin details modal for a FAIR-managed plugin**
+![Plugin details modal for a FAIR-managed plugin](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-2.png)
+
+**Direct Install page to install a new plugin by DID**
+![Direct Install page to install a new plugin by DID](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-3.png)
+
+**Avatar Source setting to manage FAIR Avatars or Gravatar**
+![Avatar Source setting to manage FAIR Avatars or Gravatar](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-4.png)
+
+**Updated WordPress News and Events dashboard widget**
+![Updated WordPress News and Events dashboard widget](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-5.png)
+
+**WordPress update page showing AspireCloud as the update source for core themes**
+![WordPress update page showing AspireCloud as the update source for core themes](https://raw.githubusercontent.com/fairpm/fair-plugin/main/assets/screenshot-6.png)
+
 ## Data Privacy
 
 * See Also: [Linux Foundation Projects Privacy Policy](https://lfprojects.org/policies/privacy-policy/)
 
-FAIR is built to reduce external dependencies and keep your site as self-contained as possible. However, some essential features require connecting to remote services in order to function correctly. This section details which features involve remote requests, what data may be transmitted, and the specific third-party providers involved. Review the list below to understand exactly where and why your site may communicate with external endpoints.
+FAIR Connect is built to reduce external dependencies and keep your site as self-contained as possible. However, some essential features require connecting to remote services in order to function correctly. This section details which features involve remote requests, what data may be transmitted, and the specific third-party providers involved. Review the list below to understand exactly where and why your site may communicate with external endpoints.
 
 * Search engine pings when a post is published are handled by [IndexNow](https://www.indexnow.org).
 * Installation and updates of all WordPress Packages (core, plugins, themes) are via [AspireCloud from AspirePress](https://aspirepress.org/) (or other mirror as configured).
@@ -66,7 +86,7 @@ In addition we self-host certain features that could not be properly protected o
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for information on contributing.
 
-The FAIR plugin is currently maintained by the Technical Independence Working Group, in conjunction with the FAIR Working Group.
+The FAIR Connect plugin is currently maintained by the Technical Independence Working Group, in conjunction with the FAIR Working Group.
 
 FAIR is licensed under the GNU General Public License, v2 or later. Copyright 2025 the contributors.
 
