@@ -3,7 +3,7 @@
  * Git Updater
  *
  * @author   Andy Fragen
- * @license  MIT
+ * @license  GPL-3.0-or-later
  * @link     https://github.com/afragen/git-updater
  * @package  git-updater
  *
@@ -160,6 +160,20 @@ class GitHub_API extends API implements API_Interface {
 			}
 			$release_assets['assets'] = $release_assets['assets'] ?? [];
 			$release_asset            = reset( $release_assets['assets'] );
+
+			/*
+			 * Check if dev release asset is newer than latest release asset.
+			 *
+			 * @param bool
+			 * @param $this->type Repo type object.
+			 */
+			if ( apply_filters( 'gu_dev_release_asset', false, $this->type ) ) {
+				$current_asset_version     = array_key_first( $release_assets['assets'] ) ?? '';
+				$current_dev_asset_version = array_key_first( $release_assets['dev_assets'] ) ?? '';
+				if ( version_compare( $current_asset_version, $current_dev_asset_version, '<' ) ) {
+					$release_asset = reset( $release_assets['dev_assets'] );
+				}
+			}
 
 			if ( empty( $this->response['release_asset_download'] ) ) {
 				$this->set_repo_cache( 'release_asset_download', $release_asset );
@@ -415,6 +429,7 @@ class GitHub_API extends API implements API_Interface {
 		$files = [];
 		$dirs  = [];
 		foreach ( $response as $content ) {
+			$content = (object) $content;
 			if ( property_exists( $content, 'type' ) && 'file' === $content->type ) {
 				$files[] = $content->name;
 			}
