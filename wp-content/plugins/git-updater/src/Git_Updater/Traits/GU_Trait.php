@@ -3,7 +3,7 @@
  * Git Updater
  *
  * @author   Andy Fragen
- * @license  MIT
+ * @license  GPL-3.0-or-later
  * @link     https://github.com/afragen/git-updater
  * @package  git-updater
  *
@@ -28,9 +28,11 @@ trait GU_Trait {
 	/**
 	 * Holds the plugin basename.
 	 *
-	 * @var string
+	 * @return string
 	 */
-	private $gu_plugin_name = 'git-updater/git-updater.php';
+	final public function gu_plugin_name(): string {
+		return is_plugin_active( 'git-updater/git-updater.php' ) ? 'git-updater/git-updater.php' : 'git-updater-f27e06/git-updater.php';
+	}
 
 	/**
 	 * Checks to see if a heartbeat is resulting in activity.
@@ -145,6 +147,14 @@ trait GU_Trait {
 		 */
 		$timeout = apply_filters( 'gu_repo_cache_timeout', $timeout, $id, $response, $repo );
 
+		// Merge with existing cache if it exists and is an array.
+		// Prevents overwriting other data stored in cache when multiple requests are made before cache expires.
+		$existing_cache = get_site_option( $cache_key, [] );
+		$this->response = array_merge(
+			is_array( $existing_cache ) ? $existing_cache : [],
+			(array) $this->response
+		);
+
 		$this->response['timeout'] = strtotime( $timeout );
 		$this->response[ $id ]     = $response;
 
@@ -168,7 +178,7 @@ trait GU_Trait {
 			return false;
 		}
 		$property = $reflection_obj->getProperty( $name );
-		$property->setAccessible( true );
+		( PHP_VERSION_ID < 80100 ) && $property->setAccessible( true );
 
 		return $property->getValue( $class );
 	}
@@ -190,6 +200,11 @@ trait GU_Trait {
 	 * @return bool
 	 */
 	final public function can_update_repo( $type ) {
+		if ( isset( $type->dev_release_assets ) && apply_filters( 'gu_dev_release_asset', false, $type ) ) {
+			$release_asset_version = array_key_first( $type->dev_release_assets ) ?? '';
+			$release_asset_version = ltrim( $release_asset_version, 'v' );
+			$type->remote_version  = $release_asset_version ?: $type->remote_version;
+		}
 		$wp_version_ok   = ! empty( $type->requires )
 			? is_wp_version_compatible( $type->requires )
 			: true;
@@ -829,5 +844,33 @@ trait GU_Trait {
 		$slug                = str_replace( '-' . $this->get_did_hash( $did ), '', $slug );
 
 		return $slug . '/' . $file;
+	}
+
+	/**
+	 * Get GitHub API rate limit headers.
+	 *
+	 * Display ratelimit reset time in minutes.
+	 *
+	 * @return array|WP_Error
+	 */
+	final public function get_github_rate_limit_headers() {
+		$auth_header = Singleton::get_instance( 'Fragen\Git_Updater\API\API', $this )->add_auth_header( [], 'https://api.github.com/rate_limit' );
+		$response    = wp_remote_head( 'https://api.github.com/rate_limit', $auth_header );
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$headers = wp_remote_retrieve_headers( $response );
+		$data    = $headers->getAll();
+		if ( isset( $data['x-ratelimit-reset'] ) ) {
+			$reset = (int) $data['x-ratelimit-reset'];
+			// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+			$data['x-ratelimit-reset'] = date( 'i', $reset - time() ) . ' minutes';
+		} else {
+			$data['x-ratelimit-reset'] = '60 minutes';
+		}
+
+		return $data;
 	}
 }
