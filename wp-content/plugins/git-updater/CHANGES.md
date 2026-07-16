@@ -1,5 +1,28 @@
 #### [unreleased]
 
+#### 12.23.1 / 2026-02-12
+* add guard to release asset development download link in REST API
+* fix potential race condition when saving cache to multi-server/clustered environments [#1133](https://github.com/afragen/git-updater/issues/1133), thanks @Ipstenu
+
+#### 12.23.0 / 2026-02-11
+* guard on `ReflectionProptery::setAccessible()` deprecated for PHP 8.5 and included in PHP 8.1+
+* case-insensitive matching for `alpha|beta|RC`
+* make `Language_Pack::update_site_transient()` a static
+* fix REST API to return correct download link depending upon development channel
+
+#### 12.22.0 / 2026-01-13
+* added `gu_dev_release_asset` filter for dev release assets
+* added `channel` query arg for dev release assets when using `update-api` REST endpoint
+* send a saved access token with `update-api` REST API if one exists
+* omit non-shared packages from REST API
+
+#### 12.21.0 / 2025-12-31 🎆
+* remove `git_updater_plugin_updates` and `git_updater_theme_updates` options, see [#1119](https://github.com/afragen/git-updater/issues/1119)
+* add `gu_plugin_name()` to return plugin name, slug or slug-didhash
+* change `can_update()` check to `manage_options` for `DISALLOW_FILE_MODS` constant
+* MIT to GPL-3.0-or-later because of distributed components, etc
+* cast `$response` elements to object in `parse_contents_response()`
+
 #### 12.20.2 / 2025-12-08
 * harden REST API data for versions if relesase_assets and tags are empty -- this can happen if too many tags are created that aren't semver format
 * limit REST API to return last 20 versions
