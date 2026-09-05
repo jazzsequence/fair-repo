@@ -41,7 +41,7 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
 
     public static function createFromHex(string $value): self
     {
-        $integer = BigInteger::fromBase($value, 16);
+        $integer = Utils::hexToBigInteger($value);
 
         return self::createBigInteger($integer);
     }
@@ -67,7 +67,7 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
             return (string) $this->additionalInformation;
         }
 
-        return BigInteger::fromBase(bin2hex($this->data), 16)->toBase(10);
+        return Utils::hexToBigInteger(bin2hex($this->data))->toBase(10);
     }
 
     /**

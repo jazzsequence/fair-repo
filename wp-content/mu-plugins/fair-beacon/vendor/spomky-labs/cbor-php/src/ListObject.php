@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace CBOR;
 
+use function array_key_exists;
 use ArrayAccess;
 use ArrayIterator;
+use function count;
 use Countable;
 use InvalidArgumentException;
 use Iterator;
 use IteratorAggregate;
-use function array_key_exists;
-use function count;
 
 /**
  * @phpstan-implements ArrayAccess<int, CBORObject>
@@ -27,7 +27,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
      */
     private array $data;
 
-    private ?string $length = null;
+    private ?string $length;
 
     /**
      * @param CBORObject[] $data
