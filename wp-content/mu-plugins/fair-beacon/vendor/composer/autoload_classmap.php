@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CURLStringFile' => $vendorDir . '/symfony/polyfill-php81/Resources/stubs/CURLStringFile.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'MiniFAIR\\API\\MetadataDocument' => $baseDir . '/inc/api/class-metadatadocument.php',
     'MiniFAIR\\API\\ReleaseDocument' => $baseDir . '/inc/api/class-releasedocument.php',
@@ -18,4 +19,5 @@ return array(
     'MiniFAIR\\PLC\\Operation' => $baseDir . '/inc/plc/class-operation.php',
     'MiniFAIR\\PLC\\SignedOperation' => $baseDir . '/inc/plc/class-signedoperation.php',
     'MiniFAIR\\Provider' => $baseDir . '/inc/class-provider.php',
+    'ReturnTypeWillChange' => $vendorDir . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
 );
