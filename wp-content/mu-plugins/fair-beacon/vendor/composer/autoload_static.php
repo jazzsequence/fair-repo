@@ -6,10 +6,18 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
 {
+    public static $files = array (
+        '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'Y' =>
         array (
             'YOCLIB\\Multiformats\\Multibase\\' => 30,
+        ),
+        'S' =>
+        array (
+            'Symfony\\Polyfill\\Php81\\' => 23,
         ),
         'E' =>
         array (
@@ -31,6 +39,10 @@ class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
         'YOCLIB\\Multiformats\\Multibase\\' =>
         array (
             0 => __DIR__ . '/..' . '/yocto/yoclib-multibase/src',
+        ),
+        'Symfony\\Polyfill\\Php81\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php81',
         ),
         'Elliptic\\' =>
         array (
@@ -55,6 +67,7 @@ class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
     );
 
     public static $classMap = array (
+        'CURLStringFile' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/CURLStringFile.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'MiniFAIR\\API\\MetadataDocument' => __DIR__ . '/../..' . '/inc/api/class-metadatadocument.php',
         'MiniFAIR\\API\\ReleaseDocument' => __DIR__ . '/../..' . '/inc/api/class-releasedocument.php',
@@ -67,6 +80,7 @@ class ComposerStaticInit6b3f645d0da4d2f56e6ba672dc1e806b
         'MiniFAIR\\PLC\\Operation' => __DIR__ . '/../..' . '/inc/plc/class-operation.php',
         'MiniFAIR\\PLC\\SignedOperation' => __DIR__ . '/../..' . '/inc/plc/class-signedoperation.php',
         'MiniFAIR\\Provider' => __DIR__ . '/../..' . '/inc/class-provider.php',
+        'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
