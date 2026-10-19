@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'YOCLIB\\Multiformats\\Multibase\\' => array($vendorDir . '/yocto/yoclib-multibase/src'),
+    'Symfony\\Polyfill\\Php81\\' => array($vendorDir . '/symfony/polyfill-php81'),
     'Elliptic\\' => array($vendorDir . '/simplito/elliptic-php/lib'),
     'CBOR\\' => array($vendorDir . '/spomky-labs/cbor-php/src'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
